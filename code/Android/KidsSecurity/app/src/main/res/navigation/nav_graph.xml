@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.kidssecurity.view.LoginFragment"
+        android:label="@string/authentication_string"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_createAccountFragment"
+            app:destination="@id/createAccountFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_loadingFragment"
+            app:destination="@id/loadingFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAccountFragment"
+        android:name="com.example.kidssecurity.view.CreateAccountFragment"
+        android:label="@string/create_account_string"
+        tools:layout="@layout/fragment_create_account" >
+        <argument
+            android:name="isParent"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_createAccountFragment_to_loadingFragment"
+            app:destination="@id/loadingFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="parent"
+            app:argType="com.example.securitykids.model.entities.Parent"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.example.kidssecurity.view.LoadingFragment"
+        android:label="fragment_loading"
+        tools:layout="@layout/fragment_loading" >
+        <argument
+            android:name="is_user_parent"
+            app:argType="boolean" />
+        <argument
+            android:name="user"
+            app:argType="com.example.kidssecurity.model.retrofit.entity.User" />
+        <action
+            android:id="@+id/action_loadingFragment_to_parentHomeFragment"
+            app:destination="@id/parentHomeFragment"
+            app:popUpTo="@id/loadingFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loadingFragment_to_childHomeFragment"
+            app:destination="@id/childHomeFragment"
+            app:popUpTo="@id/loadingFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/parentHomeFragment"
+        android:name="com.example.kidssecurity.view.ParentHomeFragment"
+        android:label="@string/home_string">
+        <argument
+            android:name="parent"
+            app:argType="com.example.securitykids.model.entities.Parent" />
+        <action
+            android:id="@+id/action_parentHomeFragment_to_createAccountFragment"
+            app:destination="@id/createAccountFragment" />
+        <action
+            android:id="@+id/action_parentHomeFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+        <action
+            android:id="@+id/action_parentHomeFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_parentHomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/parentHomeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.example.kidssecurity.view.UserProfileFragment"
+        android:label="@string/profile_string" >
+        <argument
+            android:name="user_profile"
+            app:argType="com.example.kidssecurity.model.retrofit.entity.User" />
+        <argument
+            android:name="is_parent_profile"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.kidssecurity.view.ChatFragment"
+        android:label="@string/chat_string">
+        <argument
+            android:name="sender"
+            app:argType="com.example.kidssecurity.model.retrofit.entity.User" />
+        <argument
+            android:name="receiver"
+            app:argType="com.example.kidssecurity.model.retrofit.entity.User" />
+        <argument
+            android:name="is_sender_parent"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/childHomeFragment"
+        android:name="com.example.kidssecurity.view.ChildHomeFragment"
+        android:label="@string/home_string">
+        <action
+            android:id="@+id/action_childHomeFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+        <action
+            android:id="@+id/action_childHomeFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_childHomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/childHomeFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="child"
+            app:argType="com.example.securitykids.model.entities.Child" />
+        <argument
+            android:name="child_parent"
+            app:argType="com.example.securitykids.model.entities.Parent" />
+    </fragment>
+</navigation>

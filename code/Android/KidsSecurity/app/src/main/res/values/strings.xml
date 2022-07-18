@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">KidsSecurity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="parent_string">Parent</string>
+    <string name="child_string">Child</string>
+    <string name="login_string">login</string>
+    <string name="psw_string">password</string>
+    <string name="sign_in_button">Sign in</string>
+    <string name="create_string">Create</string>
+    <string name="authentication_string">Authentication</string>
+    <string name="create_account_string">Create account</string>
+    <string name="take_picture_string">Take a picture</string>
+    <string name="add_picture_string">"Add picture "</string>
+    <string name="full_name_string">Name</string>
+    <string name="phone_number_string">Phone number</string>
+    <string name="finish_string">Finish</string>
+    <string name="loading_string">Loading</string>
+    <string name="create_account_error">Error: your account not created</string>
+    <string name="empty_field_error">An Input needed</string>
+    <string name="wrong_Input_error">Wrong Input</string>
+    <string name="home_string">Home</string>
+    <string name="log_out_string">Log_out</string>
+    <string name="profile_string">Profile</string>
+    <string name="name_string">Name: %1$s</string>
+    <string name="phone_number_string_value">Phone number: %1$d</string>
+    <string name="call_warning_dialog_title">You are calling …  </string>
+    <string name="call_warning_dialog_body">Phone call to %1$d of %2$s</string>
+    <string name="call_dialog_positive_button">confirm</string>
+    <string name="child_profile_string">Child profile</string>
+    <string name="call_string">Make a phone call</string>
+    <string name="chat_string">Chat</string>
+    <string name="message_string">message</string>
+    <string name="send_string">Send</string>
+    <string name="no_location">This child not located yet</string>
+    <string name="location_permission_warning_title">Permission needed</string>
+    <string name="location_permission_warning_body">The access location permission needed to proceed</string>
+    <string name="location_permission_warning_positive">OK</string>
+    <string name="urgent_message">Please help here is my location %s</string>
+    <string name="location_permission_warning_negative"> Exit</string>
+    <string name="urgent_string">Urgent</string>
+    <string name="my_location">My location</string>
+    <string name="message_sent">Message has been sent</string>
+    <string name="enable_location_access">Please enable location access</string>
+    <string name="setting_warning_title">Please enable location access</string>
+    <string name="setting_warning_body">In order to update you with your location you need
+    to enable location access in the location setting</string>
+    <string name="Localisation_Error">You need to give access location permission to get your current location</string>
+    <string name="chat_notification_title">%s send you a message</string>
+    <string name="channel_name">Chatting</string>
+    <string name="channel_description">Channel for chat</string>
+</resources>

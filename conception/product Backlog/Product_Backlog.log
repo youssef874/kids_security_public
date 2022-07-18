@@ -1,0 +1,93 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12) (preloaded format=pdflatex 2022.2.13)  25 FEB 2022 11:17
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**./Product_Backlog.tex
+(Product_Backlog.tex
+LaTeX2e <2021-11-15> patch level 1
+L3 programming layer <2021-11-22>
+(D:\programs\Miktex\tex/latex/base\article.cls
+Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
+(D:\programs\Miktex\tex/latex/base\size10.clo
+File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count183
+\c@section=\count184
+\c@subsection=\count185
+\c@subsubsection=\count186
+\c@paragraph=\count187
+\c@subparagraph=\count188
+\c@figure=\count189
+\c@table=\count190
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+)
+(D:\programs\Miktex\tex/latex/blindtext\blindtext.sty
+Package: blindtext 2012/01/06 V2.0 blindtext-Package
+
+(D:\programs\Miktex\tex/latex/tools\xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+)
+\c@blindtext=\count191
+\c@Blindtext=\count192
+\c@blind@countparstart=\count193
+\blind@countxx=\count194
+\blindtext@numBlindtext=\count195
+\blind@countyy=\count196
+\c@blindlist=\count197
+\c@blindlistlevel=\count198
+\c@blindlist@level=\count199
+\blind@listitem=\count266
+\c@blind@listcount=\count267
+\c@blind@levelcount=\count268
+\blind@mathformula=\count269
+\blind@Mathformula=\count270
+\c@blind@randomcount=\count271
+\c@blind@randommax=\count272
+\c@blind@pangramcount=\count273
+\c@blind@pangrammax=\count274
+)
+(D:\programs\Miktex\tex/latex/l3backend\l3backend-pdftex.def
+File: l3backend-pdftex.def 2021-10-18 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count275
+\l__pdf_internal_box=\box50
+)
+(Product_Backlog.aux)
+\openout1 = `Product_Backlog.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 6.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 6.
+ [1{C:/Users/Youssef/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] (Produc
+t_Backlog.aux) ) 
+Here is how much of TeX's memory you used:
+ 613 strings out of 478659
+ 11449 string characters out of 2858160
+ 315729 words of memory out of 3000000
+ 18793 multiletter control sequences out of 15000+600000
+ 403430 words of font info for 27 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 40i,10n,48p,162b,218s stack positions out of 5000i,500n,10000p,200000b,80000s
+<D:/programs/Miktex/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+Output written on Product_Backlog.pdf (1 page, 21654 bytes).
+PDF statistics:
+ 11 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
