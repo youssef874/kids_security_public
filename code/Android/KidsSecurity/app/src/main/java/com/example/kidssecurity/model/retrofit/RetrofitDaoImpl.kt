@@ -18,7 +18,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val BASE_URL = "http://192.168.1.30:8080"
+private const val BASE_URL = "http://your_ip_address:8080"
 
 /**
 This class hold all network services for this app
