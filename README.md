@@ -1,7 +1,7 @@
 
 # Android application for kids security
 
-This is android application developped with android framwork in kotlin an spring boot for backend.To allow parent track their kids. 
+This is android application developped with android framwork in kotlin and spring boot for backend.To allow parent track their kids. 
 
 
 ## Acknowledgements
