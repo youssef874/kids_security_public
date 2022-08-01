@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.kidssecurity.R
+import com.example.kidssecurity.checkForegroundLocationAccessPermission
 import com.example.kidssecurity.databinding.FragmentLoadingBinding
 import com.example.kidssecurity.model.Repository
 import com.example.kidssecurity.view_model.loading.LoadingViewModel
@@ -54,7 +55,7 @@ class LoadingFragment : Fragment() {
 
     //This will hold the location permission result
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
-    private var permissionGranted = false
+    private var permissionGranted:Boolean? = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,9 +92,9 @@ class LoadingFragment : Fragment() {
 
         viewModel.childParent.observe(viewLifecycleOwner) {
             if (it != null) {
-                requestPermission()
+                context?.checkForegroundLocationAccessPermission(requestPermissionLauncher)
                 if (it.data != null && it.data != Parent()){
-                    if (permissionGranted){
+                    if (permissionGranted == true){
                         childParent = it.data
                         viewModel.downloadAllImagesForChildUser(child!!, requireContext(), it.data)
                     }
@@ -109,30 +110,6 @@ class LoadingFragment : Fragment() {
     }
 
     /**
-     * This function responsible for asking for access location user permission
-     */
-    private fun requestPermission() {
-        context?.let {
-            when {
-                ContextCompat.checkSelfPermission(
-                    it,
-                    CreateAccountFragment.permissions[0]
-                ) != PackageManager.PERMISSION_GRANTED ||
-                        ContextCompat.checkSelfPermission(
-                            it,
-                            CreateAccountFragment.permissions[1]
-                        ) != PackageManager.PERMISSION_GRANTED -> {
-                    requestPermissionLauncher.launch(CreateAccountFragment.permissions[0])
-                    requestPermissionLauncher.launch(CreateAccountFragment.permissions[1])
-                }else ->{
-                    permissionGranted =true
-                }
-
-            }
-        }
-    }
-
-    /**
      * This function responsible for inform the user [Child] the the permission
      * is require for the app to run
      */
@@ -141,7 +118,7 @@ class LoadingFragment : Fragment() {
             .setTitle(getString(R.string.location_permission_warning_title))
             .setMessage(getString(R.string.location_permission_warning_body))
             .setPositiveButton(getString(R.string.location_permission_warning_positive)){_,_ ->
-                requestPermission()
+                permissionGranted = context?.checkForegroundLocationAccessPermission(requestPermissionLauncher)
             }
             .setNegativeButton(getString(R.string.location_permission_warning_negative)){_,_ ->
                 requireActivity().finish()

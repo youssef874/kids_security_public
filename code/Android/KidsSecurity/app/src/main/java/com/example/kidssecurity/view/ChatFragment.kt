@@ -15,16 +15,29 @@ import com.example.kidssecurity.view.adapter.ChatListAdapter
 import com.example.kidssecurity.view_model.chat.ChatViewModel
 import com.example.kidssecurity.view_model.chat.ChatViewModelFactory
 import com.example.securitykids.model.entities.Child
+import com.example.securitykids.model.entities.Message
 import com.example.securitykids.model.entities.Parent
 
 
 class ChatFragment : Fragment() {
 
-    private lateinit var binding: FragmentChatBinding
+    // Binding object instance corresponding to the fragment_chat_home.xml layout
+    // This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks,
+    // when the view hierarchy is attached to the fragment.
+    private var _binding: FragmentChatBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
+    //The sender in this conversation which is the current user
     private var sender: User? = null
+    //The receiver in this conversation
     private var receiver: User? = null
+    //Is the [User] a [Parent] or not
     private var isParent = true
+    //All the messages between the current user of this app and and the other parties which can be [Parent]
+    //or [Child]
+    private var conversation: List<Message>? = null
 
     private val retrofitRepository = Repository.retrofitRepository
 
@@ -32,7 +45,9 @@ class ChatFragment : Fragment() {
 
     private val viewModel: ChatViewModel by viewModels { factory }
 
+    //the [Parent] in this conversation
     private var parent: Parent = Parent()
+    //the [Child] in this conversation
     private var child: Child = Child()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,13 +76,14 @@ class ChatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentChatBinding.inflate(inflater, container, false)
-        viewModel.ConversationMessages.observe(viewLifecycleOwner){
+        _binding = FragmentChatBinding.inflate(inflater, container, false)
+        viewModel.conversationMessages.observe(viewLifecycleOwner){
             if (it.data?.isNotEmpty() == true){
                 receiver?.let { it1 ->
                     viewModel.displayConversation(it.data,requireContext(),isParent,
                         it1
                     )
+                    conversation = it.data
                 }
             }else{
                 Log.e(TAG,"error: ${it.message}")
@@ -105,6 +121,15 @@ class ChatFragment : Fragment() {
         }
         binding.messageEditText.text?.clear()
         binding.messageEditText.clearFocus()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        receiver?.let {
+            viewModel.startWork(isParent,conversation,
+                it,parent.idParent,child.idChild,requireActivity().application)
+        }
+        _binding = null
     }
 
     companion object {

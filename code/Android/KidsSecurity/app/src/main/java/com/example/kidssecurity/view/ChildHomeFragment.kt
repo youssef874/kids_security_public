@@ -21,6 +21,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.kidssecurity.R
+import com.example.kidssecurity.checkBackgroundLocationAccessPermission
+import com.example.kidssecurity.checkForegroundLocationAccessPermission
 import com.example.kidssecurity.databinding.FragmentChildHomeBinding
 import com.example.kidssecurity.model.Repository
 import com.example.kidssecurity.view_model.child_home.ChildHomeViewModel
@@ -74,11 +76,20 @@ class ChildHomeFragment : Fragment(), OnMapReadyCallback {
 
     //This property will hold the call permission result
     private lateinit var requestCallPermissionLauncher: ActivityResultLauncher<String>
-    private lateinit var requestAccessLocationPermissionLauncher:ActivityResultLauncher<String>
+    //This property will hold the foreground Access Location permission result
+    private lateinit var requestAccessLocationPermissionLauncher: ActivityResultLauncher<String>
+    //This property will hold the background Access Location permission result
+    private lateinit var requestBackgroundAccessLocationLauncher: ActivityResultLauncher<String>
+    //This property will hold SMS permission result
     private lateinit var requestSmsPermissionLauncher: ActivityResultLauncher<String>
 
+    // Current child Location
     private var currentLocation: LatLng? = null
+    //If the location is accessible from the foreground
     private var isLocationAccessible: Boolean? = null
+    //If the location is accessible from the background
+    private var isTrackableInBackground: Boolean? = null
+    //This will hold the message of the SMS
     private var message: String? = null
 
 
@@ -111,7 +122,6 @@ class ChildHomeFragment : Fragment(), OnMapReadyCallback {
 
         locationCallback = object: LocationCallback(){
             override fun onLocationResult(p0: LocationResult) {
-                val locationResult = p0.lastLocation
                p0.lastLocation?.let {
                    currentLocation = LatLng(it.latitude,it.longitude)
                    viewModel.updateCurrentLocation(LatLng(it.latitude,it.longitude))
@@ -121,7 +131,8 @@ class ChildHomeFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun createLocationRequest() {
-        isLocationAccessible = true
+        isLocationAccessible =
+            context?.checkForegroundLocationAccessPermission(requestAccessLocationPermissionLauncher)
         locationRequest = LocationRequest.create().apply {
             // Sets the desired interval for
             // active location updates.
@@ -180,6 +191,13 @@ class ChildHomeFragment : Fragment(), OnMapReadyCallback {
             isLocationAccessible = it
         }
 
+        requestBackgroundAccessLocationLauncher = registerForActivityResult(
+            ActivityResultContracts
+                .RequestPermission()
+        ) {
+            isTrackableInBackground = it
+        }
+
         requestSmsPermissionLauncher = registerForActivityResult(
             ActivityResultContracts
                 .RequestPermission()){isGranted ->
@@ -203,12 +221,19 @@ class ChildHomeFragment : Fragment(), OnMapReadyCallback {
         }
 
         binding.childHomeLocalisation.setOnClickListener {
-            requestLocationPermission()
-            if (isLocationAccessible == true){
+            isTrackableInBackground =
+                context?.checkBackgroundLocationAccessPermission(requestBackgroundAccessLocationLauncher)
+            isLocationAccessible =
+                context?.checkForegroundLocationAccessPermission(requestAccessLocationPermissionLauncher)
+            if (isLocationAccessible == true || isTrackableInBackground == true) {
                 setCurrentLocation()
-            }else{
+            } else {
                 Snackbar
-                    .make(binding.root,getString(R.string.Localisation_Error),Snackbar.LENGTH_SHORT)
+                    .make(
+                        binding.root,
+                        getString(R.string.Localisation_Error),
+                        Snackbar.LENGTH_SHORT
+                    )
                     .show()
             }
         }
@@ -225,6 +250,9 @@ class ChildHomeFragment : Fragment(), OnMapReadyCallback {
 
     }
 
+    /**
+     * This function to check if the access location is not on
+     */
     private fun checkSystemSettingForLocalisation() {
         val builder = LocationSettingsRequest.Builder()
             .addLocationRequest(locationRequest)
@@ -245,6 +273,9 @@ class ChildHomeFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    /**
+     * This will display a warning message if the location not turn on
+     */
     private fun displayWarningDialogForLocalisation() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.setting_warning_title)
@@ -256,6 +287,9 @@ class ChildHomeFragment : Fragment(), OnMapReadyCallback {
             .show()
     }
 
+    /**
+     * Open the localization setting so the user can turn on the localization
+     */
     private fun openLocalisationSetting() {
         val intent1 = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startActivity(intent1)
@@ -275,7 +309,6 @@ class ChildHomeFragment : Fragment(), OnMapReadyCallback {
     private fun setCurrentLocation() {
        mMap?.let {
            if (currentLocation != null){
-               Log.i(TAG,"$currentLocation")
                it.clear()
                it.addMarker(MarkerOptions().position(currentLocation!!))
                it.moveCamera(CameraUpdateFactory
@@ -310,26 +343,6 @@ class ChildHomeFragment : Fragment(), OnMapReadyCallback {
                 isSenderParent = false
             )
         findNavController().navigate(action)
-    }
-
-    private fun requestLocationPermission() {
-        context?.let {
-            when{
-                ContextCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED &&  ContextCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED->{
-                    isLocationAccessible = true
-                    requestAccessLocationPermissionLauncher.launch(permissions[0])
-                    requestCallPermissionLauncher.launch(permissions[1])
-                }else ->{
-                    isLocationAccessible = true
-                }
-            }
-        }
     }
 
     private fun sendSMS(phoneNumber: String, message: String) {
@@ -442,6 +455,8 @@ class ChildHomeFragment : Fragment(), OnMapReadyCallback {
      */
     override fun onDestroyView() {
         super.onDestroyView()
+        isTrackableInBackground =
+            context?.checkBackgroundLocationAccessPermission(requestBackgroundAccessLocationLauncher)
         _binding = null
     }
 
@@ -458,10 +473,6 @@ class ChildHomeFragment : Fragment(), OnMapReadyCallback {
         const val CHILD = "child"
         const val TAG = "ChildHomeFragment"
         const val CHILD_PARENT = "child_parent"
-        private val permissions = arrayOf(
-            "android.permission.ACCESS_COARSE_LOCATION",
-            "android.permission.ACCESS_FINE_LOCATION"
-        )
         private const val DEFAULT_ZOOM = 15
     }
 

@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         // Instantiate the navController using the NavHostFragment
         navController = navHostFragment.navController
+        //Specify the Start destination for this app so whenever user navigate to one of these, whe the back
+        //button pressed the app will be shutdown
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.loginFragment,
